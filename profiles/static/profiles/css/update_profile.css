@@ -1,0 +1,69 @@
+/* Стили для обновления профиля */
+form {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+form h2 {
+    margin-bottom: 1rem;
+    color: var(--color-button);
+}
+
+form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+form button {
+    padding: 10px 20px;
+    font-size: 2rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+form .sidebar-link {
+    text-decoration: none;
+    color: var(--color-white);
+    background-color: var(--color-button);
+    padding: 1rem;
+    border-radius: 1rem;
+    text-align: center;
+    display: block;
+    margin-top: 2rem;
+    transition: background-color 0.3s;
+}
+
+form .sidebar-link:hover {
+    background-color: var(--color-blue);
+}
+
+/* Основной контейнер */
+.main-content1 {
+    padding: 2rem;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: var(--color-button);
+}
+
+h2 {
+    font-size: 2rem;
+    color: var(--color-black);
+}

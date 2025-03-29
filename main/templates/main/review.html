@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Форма отзыва</title>
+    <link rel="stylesheet" href="{% static 'main/css/review.css' %}" />
+</head>
+
+<body>
+    <form class="decor" id="reviewForm">
+        <div class="form-left-decoration"></div>
+        <div class="form-right-decoration"></div>
+        <div class="circle"></div>
+        <div class="form-inner">
+            <h3>Написать нам</h3>
+            <input type="text" placeholder="Username" />
+            <input type="email" placeholder="Email" />
+            <textarea placeholder="Сообщение..." rows="3"></textarea>
+            <button type="submit" class="submit-button">Отправить</button>
+        </div>
+    </form>
+    <script src="{% static 'main/js/review.js' %}"></script>
+</body>
+
+</html>

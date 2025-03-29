@@ -1,0 +1,22 @@
+/* static/admin/css/admin.css */
+body {
+    background-color: #f4f4f4; /* фон страницы */
+    font-family: 'Arial', sans-serif;
+}
+
+.module h2 {
+    background-color: #0044cc;
+    color: white;
+    padding: 10px;
+}
+
+.field-box {
+    border: 1px solid #ddd;
+    margin: 10px;
+    padding: 15px;
+}
+
+.button {
+    background-color: #0044cc;
+    color: white;
+}

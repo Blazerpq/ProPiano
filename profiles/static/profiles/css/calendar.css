@@ -1,0 +1,69 @@
+.calendar-container {
+    margin-top: 2rem;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.calendar-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+
+.calendar-item input[type="date"] {
+    padding: 10px;
+    font-size: 1.5rem;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    width: 200px;
+}
+
+.calendar-item label {
+    font-size: 1.8rem;
+    color: var(--color-button);
+    text-align: center;
+    font-weight: bold;
+    flex: 1;
+}
+
+.calendar-container button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.calendar-container button:hover {
+    background-color: #0056b3;
+}
+
+/* Стили для кнопки возврата */
+.back-button-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.back-button-container button {
+    background-color: var(--color-button);
+    color: rgb(0, 0, 0);
+    padding: 10px 20px;
+    font-size: 1.8rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.back-button-container button:hover {
+    background-color: var(--color-blue);
+}

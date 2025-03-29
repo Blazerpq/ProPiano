@@ -1,0 +1,126 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+
+.container {
+    background: white;
+    padding: 25px;
+    width: 60%;
+    margin: auto;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: left;
+}
+
+h1 {
+    font-size: 26px;
+    color: #333;
+    text-align: center;
+}
+
+fieldset {
+    background: #ffffff;
+    border: 2px solid #dee2e6;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+legend {
+    font-weight: bold;
+    font-size: 18px;
+    color: #495057;
+}
+
+label {
+    display: block;
+    margin: 8px 0;
+    padding: 8px;
+    background: #f1f3f5;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+label:hover {
+    background: #e9ecef;
+}
+
+input[type="radio"] {
+    margin-right: 10px;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 8px;
+    transition: 0.3s;
+    display: block;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Блок результатов */
+.result-box {
+    background: #e3f2fd;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.result-box h2 {
+    color: #0d47a1;
+}
+
+.result-box p {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.result-box ul {
+    list-style: none;
+    padding: 0;
+}
+
+.result-box li {
+    text-align: left;
+    background: #fff3cd;
+    padding: 12px;
+    margin: 5px 0;
+    border-radius: 5px;
+    border-left: 5px solid #856404;
+}
+
+/* Кнопка возврата к урокам */
+.back-button {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 12px 18px;
+    background-color: #6c757d;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.back-button:hover {
+    background-color: #5a6268;
+}

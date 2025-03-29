@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width-device-width,initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie-edge" />
+    <link
+      href="https://unpkg.com/ionicons@4.2.2/dist/css/ionicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'login/css/login1.css'  %}" />
+    <title>Login</title>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="form-container sign-in-container">
+        <form method="post">
+          {% csrf_token %}
+          <h1>Войти</h1>
+          {{ form.as_p }}
+          <button>Войти</button>
+        </form>
+      </div>
+      <div class="overlay-container">
+        <div class="overlay">
+          <div class="overlay-panel overlay-right">
+            <h1>Привет, друг</h1>
+            <p>Зарегистрируйся и начни обучение с нами!</p>
+            <a href="{% url 'register' %}"><button class="ghost" id="signUp">Регистрация</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </body>
+</html>

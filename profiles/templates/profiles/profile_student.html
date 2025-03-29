@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Личный кабинет - Ученик</title>
+    <link rel="stylesheet" href="{% static 'main/css/reset.css' %}" />
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'music/css/music.css' %}" />
+    <link rel="stylesheet" href="{% static 'profiles/css/profile.css' %}" />
+  </head>
+  <body>
+    <div class="sidebar">
+      <ul>
+        <li><a href="{% url 'music' %}">Музыка</a></li>
+        <li><a href="#">Поиск</a></li>
+        <li><a href="#">Уроки</a></li>
+        <li><a href="{% url 'profiles' %}">Личный кабинет</a></li>
+        <li><a href="{% url 'review' %}">Поддержка</a></li>
+        <li>
+          <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="sidebar-link">Выход</button>
+          </form>
+        </li>
+      </ul>
+    </div>
+    <main class="main-content">
+      <h1>Личный кабинет - Ученик</h1>
+      <h1>Добро пожаловать, {{ user.username }}!</h1>
+      <ul>
+        <li>Ваши данные</li>
+        <li>Имя: {{ user.first_name }}</li>
+        <li>Фамилия: {{ user.last_name }}</li>
+        <li>Email: {{ user.email }}</li>
+        <a href="{% url 'update_profile' %}">Изменить данные профиля</a>
+        <p></p>
+        <a href="{% url 'calendar' %}" class="calendar-button">Календарь</a>
+      </ul>
+      <h1>Список избранных произведений</h1>
+      <!-- Проверка на наличие избранных композиций -->
+      {% if favorite_compositions %}
+      <div class="compositions-container">
+        {% for favorite in favorite_compositions %}
+        <div class="composition-card">
+          <img
+            src="{{ favorite.composition.image }}"
+            alt="{{ favorite.composition.title }}"
+          />
+          <h3>{{favorite.composition.title }}</h3>
+          <p>Жанр:{{ favorite.composition.genre }}</p>
+
+          <!-- Кнопка для удаления композиции из избранного -->
+          <a href="{% url 'remove_from_favorites' favorite.id %}">Удалить</a>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <p>У вас нет избранных произведений.</p>
+      {% endif %}
+    </main>
+  </body>
+</html>

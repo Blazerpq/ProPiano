@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест: {{ lesson.title }}</title>
+    <link rel="stylesheet" href="{% static 'lesson/css/test.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Тест по теме: {{ lesson.title }}</h1>
+
+        {% if submitted %}
+            <div class="result-box">
+                <h2>Результаты</h2>
+                <p>Вы ответили правильно на <strong>{{ correct_answers }}</strong> из 10 вопросов.</p>
+                <p>Ваша оценка: <strong>{{ grade }}</strong></p>
+
+                {% if incorrect_questions %}
+                    <h3>Ошибки:</h3>
+                    <ul>
+                        {% for question, data in incorrect_questions.items %}
+                            <li>
+                                <p><strong>Вопрос:</strong> {{ question }}</p>
+                                <p style="color: red;"><strong>Ваш ответ:</strong> {{ data.user_answer }}</p>
+                                <p style="color: green;"><strong>Правильный ответ:</strong> {{ data.correct_answer }}</p>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>Отличная работа! Все ответы верные 🎉</p>
+                {% endif %}
+
+                <!-- Кнопка возврата к урокам -->
+                <a href="{% url 'lesson' %}" class="back-button">⬅ Вернуться к урокам</a>
+            </div>
+        {% else %}
+            <form method="POST">
+                {% csrf_token %}
+                {% for question, answers in lesson.test_questions.items %}
+                    <fieldset>
+                        <legend>{{ question }}</legend>
+                        {% for answer in answers %}
+                            <label>
+                                <input type="radio" name="{{ question }}" value="{{ answer }}" required>
+                                {{ answer }}
+                            </label><br>
+                        {% endfor %}
+                    </fieldset>
+                {% endfor %}
+                <button type="submit">Отправить</button>
+            </form>
+        {% endif %}
+    </div>
+</body>
+</html>

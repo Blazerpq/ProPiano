@@ -1,0 +1,101 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f4f4f4;
+  }
+  
+  .main-content {
+    padding: 2rem;
+    width: 100%;
+    text-align: left;
+  }
+  
+  .main-content h1, .main-content h3 {
+    font-size: 2.5rem;
+    margin: 20px 0;
+    color: var(--color-button);
+  }
+  
+  .main-content ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    font-size: 1.8rem;
+    text-align: left;
+    color: var(--color-black);
+  }
+  
+  .main-content li {
+    margin: 10px 0;
+  }
+  
+  .main-content a {
+    text-decoration: none;
+    color: var(--color-blue);
+    font-size: 1.8rem;
+  }
+  
+  .main-content a:hover {
+    color: var(--color-button);
+    text-decoration: underline;
+  }
+  
+  /* Стили для карточек произведений */
+  .composition-card {
+    width: 250px;
+    height: 400px;
+    margin: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    background-color: #fff;
+  }
+  
+  .composition-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+  }
+  
+  .composition-card h3 {
+    font-size: 1.8rem;
+    margin: 10px 0;
+    text-align: center;
+  }
+  
+  .composition-card p {
+    font-size: 1.5rem;
+    margin: 5px 0;
+    text-align: center;
+  }
+  
+  .composition-card a {
+    display: block;
+    text-align: center;
+    background-color: #007bff;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-top: 10px;
+  }
+  
+  .composition-card a:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Дополнительные стили для контейнера всех карточек */
+  .compositions-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 1rem;
+  }
+
+  

@@ -1,0 +1,164 @@
+/* Общие стили для страницы */
+
+/* Боковое меню */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 15rem;
+  background-color: var(--color-button);
+  padding-top: 2rem;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  margin: 1.5rem 0;
+  text-align: center;
+}
+
+.sidebar a {
+  text-decoration: none;
+  color: var(--color-white);
+  font-size: 2rem;
+  display: block;
+  padding: 1rem 0;
+  border-radius: 1rem;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  background-color: var(--color-blue);
+  color: var(--color-white);
+}
+
+/* Общие стили для ссылок в боковом меню */
+.sidebar a,
+.sidebar button.sidebar-link {
+  text-decoration: none;
+  color: var(--color-white);
+  font-size: 2rem;
+  display: block;
+  padding: 1rem 0;
+  border-radius: 1rem;
+  transition: 0.3s;
+  background-color: transparent;
+  border: none;
+  /* Убираем рамку кнопки */
+  cursor: pointer;
+  text-align: center;
+  width: 100%;
+}
+
+.sidebar a:hover,
+.sidebar button.sidebar-link:hover {
+  background-color: var(--color-blue);
+  color: var(--color-white);
+}
+
+/* Основной контент смещаем вправо, чтобы не перекрывал меню */
+.main-content {
+  margin-left: 17rem;
+  padding: 2rem;
+}
+
+/* Стили для карточек произведений */
+.composition-card {
+  width: 250px;
+  /* Фиксированная ширина для всех карточек */
+  height: 400px;
+  /* Фиксированная высота для всех карточек */
+  margin: 1rem;
+  border: 1px solid #ddd;
+  /* Легкая рамка для карточек */
+  border-radius: 10px;
+  /* Скругленные углы */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  /* Легкая тень */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  /* Чтобы элементы не выходили за пределы */
+  background-color: #fff;
+}
+
+.composition-card img {
+  width: 100%;
+  height: 250px;
+  /* Фиксированная высота для изображения */
+  object-fit: cover;
+  /* Изображение обрезается, чтобы заполнить контейнер */
+}
+
+.composition-card h3 {
+  font-size: 2rem;
+  margin: 10px 0;
+  text-align: center;
+}
+
+.composition-card p {
+  font-size: 1.5rem;
+  margin: 5px 0;
+  text-align: center;
+}
+
+.composition-card a {
+  display: block;
+  text-align: center;
+  background-color: #007bff;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  text-decoration: none;
+  margin-top: 10px;
+}
+
+.composition-card a:hover {
+  background-color: #0056b3;
+}
+
+/* Дополнительные стили для контейнера всех карточек */
+.compositions-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  /* Выравнивание по левому краю */
+  gap: 1rem;
+  /* Пространство между карточками */
+}
+
+/* Стили для фильтра по жанрам */
+.genre-filter {
+  margin-bottom: e0px;
+  text-align: center;
+}
+
+.genre-filter select {
+  padding: 10px;
+  font-size: 1, 5rem;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+}
+
+.genre-filter button {
+  padding: 10px 20px;
+  font-size: 1, 5rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.genre-filter button:hover {
+  background-color: #0056b3;
+}

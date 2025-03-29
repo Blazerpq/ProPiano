@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Обновить профиль</title>
+    <link rel="stylesheet" href="{% static 'main/css/reset.css' %}" />
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'music/css/music.css' %}" />
+    <link rel="stylesheet" href="{% static 'profiles/css/update_profile.css' %}" />
+  </head>
+  <body>
+    <main class="main-content1">
+      <h1>Обновление профиля</h1>
+
+      <form method="POST">
+        {% csrf_token %}
+        <h2>Обновить данные</h2>
+        <div class="form-group">
+          {{ profile_form.as_p }}
+        </div>
+        <button type="submit" name="update_profile" class="update-button">Обновить данные</button>
+      </form>
+
+      <form method="POST">
+        {% csrf_token %}
+        <h2>Изменить пароль</h2>
+        <div class="form-group">
+          {{ password_form.as_p }}
+        </div>
+        <button type="submit" name="change_password" class="update-button">Изменить пароль</button>
+      </form>
+
+      <form method="post" action="{% url 'profiles' %}">
+        {% csrf_token %}
+        <button type="submit" class="sidebar-link">Профиль</button>
+      </form>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Календарь</title>
+    <link rel="stylesheet" href="{% static 'profiles/css/calendar.css' %}">
+    <link rel="stylesheet" href="{% static 'profiles/css/profile.css' %}">
+    <link rel="stylesheet" href="{% static 'profiles/css/music.css' %}">
+</head>
+<body>
+    <div class="calendar-container">
+        <h1>Календарь произведений</h1>
+
+        <!-- Форма для автоматического заполнения календаря -->
+        <form method="post" action="{% url 'fill_calendar' %}">
+            {% csrf_token %}
+            <button type="submit">Заполнить календарь</button>
+        </form>
+
+        <!-- Календарь -->
+        <div class="calendar-container">
+            <form method="post" action="{% url 'update_calendar' %}">
+                {% csrf_token %}
+                {% for item in calendar_items %}
+                <div class="calendar-item">
+                    <label>{{ item.composition.title }}</label>
+                    <!-- Проверяем, если дата есть, то передаем ее, иначе ставим пустое значение -->
+                    <input type="date" name="dates" value="{{ item.date|date:"Y-m-d" }}">
+                </div>
+                {% endfor %}
+                <button type="submit">Обновить</button>
+            </form>
+        </div>
+
+        <!-- Кнопка для возврата в личный кабинет -->
+        <div class="back-button-container">
+            <form method="get" action="{% url 'profiles' %}">
+                <button type="submit">Вернуться в личный кабинет</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

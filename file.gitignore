@@ -1,0 +1,10 @@
+# сис.файлы
+.env
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Настройки IDE
+.vscode/
+.idea/

@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ lesson.title }}</title>
+    <link rel="stylesheet" href="{% static 'main/css/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'lesson/css/lesson3.css' %}">
+</head>
+<body>
+    <div class="sidebar">
+        <ul>
+            <li><a href="{% url 'music' %}">Музыка</a></li>
+            <li><a href="#">Поиск</a></li>
+            <li><a href="{% url 'lesson' %}">Уроки</a></li>
+            <li><a href="{% url 'profiles' %}">Личный кабинет</a></li>
+            <li><a href="{% url 'review' %}">Поддержка</a></li>
+            <li>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="sidebar-link">Выход</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+
+    <main class="main-content">
+        <!-- Заголовок урока -->
+        <div class="lessons-header">
+            <h1>{{ lesson.title }}</h1>
+        </div>
+
+        <!-- Теория -->
+        <section class="lessons-theory">
+            <h2>Теория</h2>
+            <p>{{ lesson.theory_content|safe }}</p>
+        </section>
+
+        <!-- Практика -->
+        <section class="lessons-theory">
+            <p>{{ lesson.practical_content|safe }}</p>
+        </section>
+
+        <!-- Кнопка для перехода к тесту -->
+        <section class="test-section">
+            <a href="{% url 'lesson_test' lesson.id %}" target="_blank">
+                <button>Перейти к тесту</button>
+            </a>
+        </section>
+    </main>
+</body>
+</html>
