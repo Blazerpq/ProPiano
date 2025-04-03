@@ -5,15 +5,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Личный кабинет - Модератор</title>
-  <!-- Подключение CSS -->
   <link rel="stylesheet" href="{% static 'main/css/reset.css' %}">
   <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
   <link rel="stylesheet" href="{% static 'music/css/music.css' %}">
-  <link rel="stylesheet" href="{% static 'profiles/css/profile.css' %}">
+  <link rel="stylesheet" href="{% static 'profiles/css/profile4.css' %}">
 </head>
 <body>
 
-  <!-- Боковое меню -->
   <div class="sidebar">
     <ul>
       <li><a href="{% url 'music' %}">Музыка</a></li>
@@ -24,49 +22,149 @@
       <li>
         <form method="post" action="{% url 'logout' %}">
           {% csrf_token %}
-          <button type="submit" class="sidebar-link">
-            Выход
-          </button>
+          <button type="submit" class="sidebar-link">Выход</button>
         </form>
       </li>
     </ul>
   </div>
 
-  <!-- Основной контент -->
   <main class="main-content">
-    
-    <h1>Личный кабинет - Модератор</h1>
+    <h1 class="title">Личный кабинет - Модератор</h1>
 
-    <h3>Ваши данные:</h3>
-    <ul>
-      <li>Имя: {{ user.first_name }}</li>
-      <li>Фамилия: {{ user.last_name }}</li>
-      <li>Email: {{ user.email }}</li>
-      <a href="{% url 'update_profile' %}">Изменить данные профиля</a>
-      
-    <!-- Форма для добавления произведений -->
-    <h3>Добавить новое произведение</h3>
-    <form method="POST" enctype="multipart/form-data">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">Добавить</button>
-    </form>
-
-    <!-- Список произведений -->
-    <h3>Список произведений</h3>
-    <div class="compositions-container">
-      {% for composition in compositions %}
-        <div class="composition-card">
-          <img src="{{ composition.image }}" alt="{{ composition.title }}">
-          <h3>{{ composition.title }}</h3>
-          <p>Автор: {{ composition.composer_name }}</p>
-          <p>Жанр: {{ composition.genre }}</p>
-          <a href="{% url 'delete_composition' composition.composition_id %}">Удалить</a>
-        </div>
-      {% endfor %}
+    <div class="tab-menu">
+      <button class="tab-button active" onclick="openTab('profile')">Личные данные</button>
+      <button class="tab-button" onclick="openTab('compositions')">Произведения</button>
+      <button class="tab-button" onclick="openTab('lessons')">Уроки</button>
     </div>
+
+    <section id="profile" class="tab-content active">
+      <h3>Ваши данные:</h3>
+      <ul>
+        <li>Имя: {{ user.first_name }}</li>
+        <li>Фамилия: {{ user.last_name }}</li>
+        <li>Email: {{ user.email }}</li>
+        <a href="{% url 'update_profile' %}" class="edit-button">Изменить данные профиля</a>
+      </ul>
+    </section>
+
+    <section id="compositions" class="tab-content">
+      <h3>Добавить новое произведение</h3>
+      <form method="POST" enctype="multipart/form-data" class="composition-form">
+        {% csrf_token %}
+        <label for="title">Заголовок:</label>
+        {{ form.title }}
+        
+        <label for="composer_name">Композитор:</label>
+        {{ form.composer_name }}
+        
+        <label for="genre">Жанр:</label>
+        {{ form.genre }}
+        
+        <label for="image">Обложка:</label>
+        {{ form.image }}
+    
+        <button type="submit" class="submit-button">Добавить</button>
+      </form>
+
+      <h3>Список произведений</h3>
+      <div class="compositions-container">
+        {% for composition in compositions %}
+          <div class="composition-card">
+            <img src="{{ composition.image }}" alt="{{ composition.title }}">
+            <h3 class="composition-title">{{ composition.title }}</h3>
+            <p>Автор: {{ composition.composer_name }}</p>
+            <p>Жанр: {{ composition.genre }}</p>
+            <a href="{% url 'delete_composition' composition.composition_id %}" class="delete-button">Удалить</a>
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <!-- Вкладка: Уроки -->
+    <section id="lessons" class="tab-content">
+      <h3>Добавить новый урок</h3>
+      
+      <form id="lesson-form" method="POST">
+          {% csrf_token %}
+          
+          <!-- Название и краткое описание -->
+          <label for="lesson-title">Название урока:</label>
+          <input type="text" id="lesson-title" name="title" required>
+          
+          <label for="lesson-description">Краткое описание:</label>
+          <textarea id="lesson-description" name="short_description" required></textarea>
+  
+          <!-- Контейнер для глав -->
+          <div id="chapters-container">
+              <h4>Главы урока</h4>
+              <button type="button" onclick="addChapter()">Добавить главу</button>
+          </div>
+  
+          <!-- Кнопка отправки -->
+          <button type="submit" class="submit-button">Сохранить урок</button>
+      </form>
+  
+      <!-- Список добавленных уроков -->
+      <h3>Список уроков</h3>
+      <div class="lessons-container">
+          {% for lesson in lessons %}
+              <div class="lesson-card">
+                  <h4>{{ lesson.title }}</h4>
+                  <p>{{ lesson.short_description }}</p>
+                  <a href="{% url 'lesson_detail' lesson.id %}" class="view-button">Подробнее</a>
+                  <a href="{% url 'delete_lesson' lesson.id %}" class="delete-button">Удалить</a>
+              </div>
+          {% empty %}
+              <p>Пока уроков нет.</p>
+          {% endfor %}
+      </div>
+  </section>
+  
   </main>
 
   <script src="{% static 'main/js/scripts.js' %}"></script>
+  <script>
+    function openTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      document.querySelectorAll('.tab-button').forEach(btn => {
+        btn.classList.remove('active');
+      });
+
+      document.getElementById(tabId).classList.add('active');
+      document.querySelector(`[onclick="openTab('${tabId}')"]`).classList.add('active');
+    }
+
+    let chapterCount = 0;
+
+    function addChapter() {
+        chapterCount++;
+
+        let chapterDiv = document.createElement("div");
+        chapterDiv.classList.add("chapter");
+        chapterDiv.innerHTML = `
+            <h5>Глава ${chapterCount}</h5>
+            <label>Теоретическая часть:</label>
+            <textarea name="chapter_${chapterCount}_theory" required></textarea>
+
+            <label>Практическая часть (опционально):</label>
+            <textarea name="chapter_${chapterCount}_practice"></textarea>
+
+            <label>Добавить медиа (ссылка на видео или изображение):</label>
+            <input type="url" name="chapter_${chapterCount}_media">
+
+            <button type="button" onclick="removeChapter(this)">Удалить</button>
+        `;
+
+        document.getElementById("chapters-container").appendChild(chapterDiv);
+    }
+
+    function removeChapter(button) {
+        button.parentElement.remove();
+    }
+
+  </script>
+
 </body>
 </html>

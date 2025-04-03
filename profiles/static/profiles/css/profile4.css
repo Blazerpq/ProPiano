@@ -1,0 +1,362 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #f4f4f4;
+}
+
+.main-content {
+  padding: 2rem;
+  width: 100%;
+  text-align: left;
+}
+
+.main-content h1, .main-content h3 {
+  font-size: 2.5rem;
+  margin: 20px 0;
+  color: var(--color-button);
+}
+
+.main-content ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  font-size: 1.8rem;
+  text-align: left;
+  color: var(--color-black);
+}
+
+.main-content li {
+  margin: 10px 0;
+}
+
+.main-content a {
+  text-decoration: none;
+  color: var(--color-blue);
+  font-size: 1.8rem;
+}
+
+.main-content a:hover {
+  color: var(--color-button);
+  text-decoration: underline;
+}
+
+/* Стили для карточек произведений */
+.composition-card {
+  width: 250px;
+  height: 400px;
+  margin: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.composition-card img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.composition-card h3 {
+  font-size: 1.8rem;
+  margin: 10px 0;
+  text-align: center;
+}
+
+.composition-card p {
+  font-size: 1.5rem;
+  margin: 5px 0;
+  text-align: center;
+}
+
+.composition-card a {
+  display: block;
+  text-align: center;
+  background-color: #007bff;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  text-decoration: none;
+  margin-top: 10px;
+}
+
+.composition-card a:hover {
+  background-color: #0056b3;
+}
+
+/* Дополнительные стили для контейнера всех карточек */
+.compositions-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
+/* Заголовок */
+.title {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+/* Горизонтальное меню */
+.tab-menu {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.tab-button {
+  padding: 15px 30px;
+  font-size: 1.5rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: var(--color-button);
+  color: white;
+  transition: background 0.3s;
+}
+
+.tab-button:hover, .tab-button.active {
+  background-color: var(--color-button-hover);
+}
+
+/* Скрытие вкладок по умолчанию */
+.tab-content {
+  display: none;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* Анимация появления */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Кнопки */
+.submit-button, .edit-button, .delete-button {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  margin: 10px auto;
+  padding: 15px;
+  text-align: center;
+  font-size: 1.5rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.submit-button { background-color: var(--color-green); color: white; }
+.edit-button { background-color: var(--color-blue); color: white; }
+.delete-button { background-color: var(--color-red); color: white; }
+
+.submit-button:hover { background-color: var(--color-green-hover); }
+.edit-button:hover { background-color: var(--color-blue-hover); }
+.delete-button:hover { background-color: var(--color-red-hover); }
+
+.tab-menu {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.tab-button {
+  background-color: var(--color-button);
+  color: white;
+  font-size: 1.4rem;
+  padding: 12px 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
+  transition: 0.3s;
+  flex: 1; /* Делаем кнопки равной ширины */
+  text-align: center;
+  max-width: 200px; /* Максимальная ширина */
+}
+
+.tab-button:hover {
+  background-color: var(--color-dark);
+}
+
+.tab-button.active {
+  background-color: var(--color-dark);
+  color: white;
+}
+
+.composition-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.composition-form label {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: var(--color-dark);
+  display: block;
+  margin-bottom: 5px;
+}
+
+.composition-form input,
+.composition-form select,
+.composition-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1.2rem;
+}
+
+.composition-form button {
+  background-color: var(--color-button);
+  color: white;
+  font-size: 1.4rem;
+  padding: 12px 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
+  transition: 0.3s;
+  margin-top: 10px;
+}
+
+.composition-form button:hover {
+  background-color: var(--color-dark);
+}
+
+#lessons {
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h3, h4, h5 {
+  color: #333;
+}
+
+/* Стили формы */
+#lesson-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+#lesson-form label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+#lesson-form input[type="text"],
+#lesson-form input[type="url"],
+#lesson-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+#lesson-form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Контейнер для глав */
+#chapters-container {
+  margin-top: 20px;
+  padding: 15px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Блок главы */
+.chapter {
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fafafa;
+  margin-top: 15px;
+  position: relative;
+}
+
+/* Заголовок главы */
+.chapter h5 {
+  margin: 0 0 10px;
+  font-size: 18px;
+  color: #222;
+}
+
+/* Кнопки */
+button {
+  padding: 10px 15px;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  font-size: 16px;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+/* Кнопка удаления главы */
+.chapter button {
+  background: #dc3545;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+.chapter button:hover {
+  background: #a71d2a;
+}
+
+/* Кнопка добавления главы */
+#chapters-container button {
+  display: block;
+  margin: 10px auto;
+  background: #28a745;
+}
+
+#chapters-container button:hover {
+  background: #1e7e34;
+}
+
+/* Кнопка отправки формы */
+.submit-button {
+  background: #17a2b8;
+  font-size: 18px;
+  padding: 12px;
+  text-align: center;
+}
+
+.submit-button:hover {
+  background: #117a8b;
+}
