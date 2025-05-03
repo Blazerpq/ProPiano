@@ -27,4 +27,5 @@ urlpatterns = [
     path('music/', include('music.urls')),
     path('profiles/', include('profiles.urls')),
     path('lessons/', include('lesson.urls')),
+    path('my_composition/', include('music.urls'))
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

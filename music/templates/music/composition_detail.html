@@ -2,45 +2,38 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ composition.title }}</title>
-    <link rel="stylesheet" href="{% static 'music/css/music.css' %}">
+  <meta charset="UTF-8">
+  <title>Анализ исполнения</title>
+  <link rel="stylesheet" href="{% static 'music/css/my_composition.css' %}">
+  <script src="https://cdn.jsdelivr.net/npm/opensheetmusicdisplay@1.7.6/build/opensheetmusicdisplay.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tonejs/midi@2.0.7/build/Midi.min.js"></script>
 </head>
 <body>
+  <div id="container">
+    <h2>Ноты произведения</h2>
 
-    <div class="composition-container">
-        <h1>{{ composition.title }}</h1>
-        <p>Автор: {{ composition.composer_name }}</p>
-        <p>Жанр: {{ composition.genre }}</p>
-
-        <!-- Видеоурок -->
-        {% if composition.video_url %}
-            <h2>Обучающее видео</h2>
-            <iframe width="100%" height="400px" src="{{ composition.video_url }}" frameborder="0" allowfullscreen></iframe>
-        {% endif %}
-
-        <!-- Двигающиеся ноты -->
-        <h2>Ноты</h2>
-        <canvas id="sheet-music"></canvas>
-
-        <!-- Подключение MIDI-клавиатуры -->
-        <h2>Играй вместе с нотами!</h2>
-        <div id="midi-status">Ожидание подключения...</div>
-
-        <!-- Виртуальная клавиатура -->
-        <div class="virtual-piano">
-            <button class="key" data-note="C4">C</button>
-            <button class="key" data-note="D4">D</button>
-            <button class="key" data-note="E4">E</button>
-            <button class="key" data-note="F4">F</button>
-            <button class="key" data-note="G4">G</button>
-            <button class="key" data-note="A4">A</button>
-            <button class="key" data-note="B4">B</button>
-        </div>
+    <div id="controls">
+      <button id="clearBtn">Очистить</button>
+      <button id="zoomInBtn">🔍 Увеличить</button>
+      <button id="zoomOutBtn">🔎 Уменьшить</button>
+      <button id="prevPageBtn">⬅️ Назад</button>
+      <button id="nextPageBtn">➡️ Вперёд</button>
     </div>
 
-    <script src="{% static 'music/js/midi.js' %}"></script>
-    <script src="{% static 'music/js/sheet_music.js' %}"></script>
+    <div id="sheet"></div>
+
+    <h3>Сравнение с эталонным исполнением</h3>
+    <div id="midi-controls">
+        <input type="file" id="midiFile2" accept=".mid,.midi">
+        <button id="compareMidiBtn">Сравнить</button>
+        <div id="summary-box" style="display:none;"></div>
+    </div>
+
+    <!-- скрытые поля для передачи путей в JS -->
+    <input type="hidden" id="sheetMusicUrl" value="{{ composition.sheet_music }}">
+    <input type="hidden" id="midiFile1Url" value="{{ composition.midi_file }}">
+  </div>
+
+  <script src="{% static 'music/js/composition_detail.js' %}"></script>
 </body>
 </html>

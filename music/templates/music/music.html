@@ -7,7 +7,7 @@
   <title>ProPiano</title>
   <link rel="stylesheet" href="{% static 'main/css/reset.css' %}">
   <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
-  <link rel="stylesheet" href="{% static 'music/css/music.css' %}">
+  <link rel="stylesheet" href="{% static 'music/css/music1.css' %}">
   
 </head>
 <body>
@@ -31,35 +31,44 @@
   <!-- Основной контент -->
   <main class="main-content">
     
-    <!-- Фильтр по жанрам -->
-    <div class="genre-filter">
-      <form method="GET">
-        <select name="genre">
-          <option value="">Все жанры</option>
-          {% for genre in genres %}
-            <option value="{{ genre }}" {% if genre == selected_genre %}selected{% endif %}>{{ genre }}</option>
-          {% endfor %}
-        </select>
-        <button type="submit">Фильтровать</button>
-      </form>
-    </div>
+    <!-- Фильтр и кнопка загрузки -->
+<div class="genre-filter-wrapper">
+  <div class="genre-filter">
+    <form method="GET">
+      <select name="genre">
+        <option value="">Все жанры</option>
+        {% for genre in genres %}
+          <option value="{{ genre }}" {% if genre == selected_genre %}selected{% endif %}>{{ genre }}</option>
+        {% endfor %}
+      </select>
+      <button type="submit">Фильтровать</button>
+    </form>
+  </div>
+
+  <div class="upload-button">
+    <a href="{% url 'my_composition' %}" class="upload-link">➕ Загрузить произведение</a>
+  </div>
+</div>
 
     <!-- Карточки произведений -->
     <div class="compositions-container">
       {% for composition in compositions %}
-        <div class="composition-card">
-          <img src="{{ composition.image }}">
-          <h3>{{ composition.title }}</h3>
-          <p>Автор: {{ composition.composer_name }}</p>
-          <p>Жанр: {{ composition.genre }}</p>
-          {% if request.user.is_authenticated %}
-          {% if composition in user_favorites %}
-          {% else %}
-            <a href="{% url 'add_to_favorites' composition_id=composition.composition_id %}">Добавить в избранное</a>
-          {% endif %}
-        {% endif %}
-      </div>
-    {% endfor %}
+        <a href="{% url 'composition_detail' composition.composition_id %}" class="composition-card-link">
+          <div class="composition-card">
+            <img src="{{ composition.image }}">
+            <h3>{{ composition.title }}</h3>
+            <p>Автор: {{ composition.composer_name }}</p>
+            <p>Жанр: {{ composition.genre }}</p>
+            {% if request.user.is_authenticated %}
+              {% if composition in user_favorites %}
+                <p>⭐ В избранном</p>
+              {% else %}
+                <p class="add-fav-hint">Добавить в избранное</p>
+              {% endif %}
+            {% endif %}
+          </div>
+        </a>
+      {% endfor %}
     </div>
   </main>
 

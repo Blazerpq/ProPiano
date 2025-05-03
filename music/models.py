@@ -1,18 +1,33 @@
 from django.db import models
-from django.conf import settings  # Для получения текущего пользователя
 
 class Composition(models.Model):
     composition_id = models.AutoField(primary_key=True)
     composer_name = models.CharField(max_length=100)
     title = models.CharField(max_length=255)
     genre = models.CharField(max_length=100)
-    sheet_music_url = models.URLField()
-    audio_url = models.URLField()
-    image = models.URLField()
+    # Файл с нотами (.musicxml)
+    sheet_music = models.FileField(
+        upload_to='music/notes/',
+        verbose_name='Ноты (.musicxml)',
+        null=True,
+        blank=True
+    )
 
-    class Meta:
-        db_table = 'compositions'  # Название существующей таблицы
-        managed = False  # Django не будет пытаться управлять этой таблицей (создавать или изменять её)
+    # Эталонный MIDI
+    midi_file = models.FileField(
+        upload_to='music/midi/',
+        verbose_name='MIDI-файл (эталон)',
+        null=True,
+        blank=True
+    )
+
+    # Картинка к композиции
+    image = models.ImageField(
+        upload_to='music/image/',
+        verbose_name='Обложка',
+        null=True,
+        blank=True
+    )
 
     def _str_(self):
         return self.title

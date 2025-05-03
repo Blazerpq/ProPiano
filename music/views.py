@@ -20,3 +20,12 @@ def music(request):
         'selected_genre': genre_filter,
     })
 
+def my_composition(request):
+    return render(request, 'music/my_composition.html')
+
+def composition_detail(request, composition_id):
+    composition = get_object_or_404(Composition, pk=composition_id)
+    return render(request, 'music/composition_detail.html', {
+        'composition': composition
+    })
+
