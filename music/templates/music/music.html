@@ -7,7 +7,7 @@
   <title>ProPiano</title>
   <link rel="stylesheet" href="{% static 'main/css/reset.css' %}">
   <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
-  <link rel="stylesheet" href="{% static 'music/css/music1.css' %}">
+  <link rel="stylesheet" href="{% static 'music/css/music5.css' %}">
   
 </head>
 <body>
@@ -50,26 +50,33 @@
   </div>
 </div>
 
-    <!-- Карточки произведений -->
-    <div class="compositions-container">
-      {% for composition in compositions %}
-        <a href="{% url 'composition_detail' composition.composition_id %}" class="composition-card-link">
-          <div class="composition-card">
-            <img src="{{ composition.image }}">
-            <h3>{{ composition.title }}</h3>
-            <p>Автор: {{ composition.composer_name }}</p>
-            <p>Жанр: {{ composition.genre }}</p>
-            {% if request.user.is_authenticated %}
-              {% if composition in user_favorites %}
-                <p>⭐ В избранном</p>
-              {% else %}
-                <p class="add-fav-hint">Добавить в избранное</p>
-              {% endif %}
-            {% endif %}
+<div class="compositions-container">
+  {% for composition in compositions %}
+  <a href="{% url 'composition_detail' composition.composition_id %}">
+    <div class="composition-card">
+      {% if composition.image %}
+          <img src="{{ composition.image.url }}" 
+               class="composition-cover" 
+               alt="{{ composition.title }}">
+        {% else %}
+          <div class="no-image-placeholder" style="height: 250px; display: flex; align-items: center; justify-content: center;">
+            <span>Нет обложки</span>
           </div>
-        </a>
-      {% endfor %}
-    </div>
+        {% endif %}
+      <h3>{{ composition.title }}</h3>
+      <p>Автор: {{ composition.composer_name }}</p>
+      <p>Жанр: {{ composition.genre }}</p>
+      {% if request.user.is_authenticated %}
+      {% if composition in user_favorites %}
+      {% else %}
+        <a href="{% url 'add_to_favorites' composition_id=composition.composition_id %}">Добавить в избранное</a>
+      {% endif %}
+    {% endif %}
+  </div>
+{% endfor %}
+</div>
+
+
   </main>
 
   <script src="{% static 'main/js/scripts.js' %}"></script>

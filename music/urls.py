@@ -9,6 +9,3 @@ urlpatterns = [
    path('composition_detail', views.composition_detail, name='composition_detail'),
    path('<int:composition_id>/', views.composition_detail, name='composition_detail'),
 ]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
