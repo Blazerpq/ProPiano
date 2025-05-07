@@ -1,11 +1,8 @@
 // Инициализация элементов управления
 const sheetContainer = document.getElementById("sheet");
 const logDiv = document.getElementById("log");
-const clearBtn = document.getElementById("clearBtn");
 const zoomInBtn = document.getElementById("zoomInBtn");
 const zoomOutBtn = document.getElementById("zoomOutBtn");
-const prevPageBtn = document.getElementById("prevPageBtn");
-const nextPageBtn = document.getElementById("nextPageBtn");
 const midiFile2Input = document.getElementById("midiFile2");
 const compareMidiBtn = document.getElementById("compareMidiBtn");
 const summaryBox = document.getElementById("summary-box");
@@ -50,11 +47,17 @@ async function loadMusicXML(url) {
 }
 
 // Обработчики событий
-clearBtn.addEventListener("click", () => {
-    sheetContainer.innerHTML = "";
-    logDiv.textContent = "";
-    osmd.clear();
+
+// Автоматическая загрузка нот при открытии страницы
+document.addEventListener('DOMContentLoaded', async () => {
+    const sheetMusicUrlElement = document.getElementById('sheet-music-url');
+    if (sheetMusicUrlElement && sheetMusicUrlElement.dataset.url) {
+        await loadMusicXML(sheetMusicUrlElement.dataset.url);
+    } else {
+        logDiv.textContent = "❌ Ноты недоступны";
+    }
 });
+
 
 zoomInBtn.addEventListener("click", () => {
     zoom += 0.1;
@@ -66,29 +69,7 @@ zoomOutBtn.addEventListener("click", () => {
     updateView();
 });
 
-nextPageBtn.addEventListener("click", () => {
-    if (currentPage < totalPages) {
-        currentPage++;
-        osmd.renderPage(currentPage);
-    }
-});
 
-prevPageBtn.addEventListener("click", () => {
-    if (currentPage > 1) {
-        currentPage--;
-        osmd.renderPage(currentPage);
-    }
-});
-
-// Автоматическая загрузка нот при открытии страницы
-document.addEventListener('DOMContentLoaded', async () => {
-    const sheetMusicUrlElement = document.getElementById('sheet-music-url');
-    if (sheetMusicUrlElement && sheetMusicUrlElement.dataset.url) {
-        await loadMusicXML(sheetMusicUrlElement.dataset.url);
-    } else {
-        logDiv.textContent = "❌ Ноты недоступны";
-    }
-});
 
 // MIDI сравнение
 async function parseMidiBuffer(buffer) {
@@ -193,4 +174,64 @@ compareMidiBtn.addEventListener("click", async () => {
         summaryBox.style.display = "block";
         console.error(err);
     }
+});
+
+import { initMIDI } from "./midi7.js";
+
+document.addEventListener("DOMContentLoaded", function () {
+    const midi = initMIDI("midi-status", "midi-log");
+
+    const connectBtn = document.getElementById("connect-midi-btn");
+    connectBtn.addEventListener("click", () => {
+        midi.connect();
+    });
+});
+
+// Добавляем новые элементы управления
+const recordMidiBtn = document.getElementById("recordMidiBtn");
+const recordingStatus = document.getElementById("recording-status");
+
+// Инициализация MIDI с записью
+document.addEventListener("DOMContentLoaded", function () {
+    const midi = initMIDI("midi-status", "midi-log");
+
+    const connectBtn = document.getElementById("connect-midi-btn");
+    connectBtn.addEventListener("click", () => {
+        midi.connect();
+    });
+
+    // Обработчик кнопки записи
+    recordMidiBtn.addEventListener("click", async () => {
+        if (!midi.isRecording()) {
+            const success = midi.startRecording();
+            if (success) {
+                recordMidiBtn.textContent = "⏹ Стоп";
+                recordingStatus.textContent = "Статус: запись...";
+            }
+        } else {
+            const midiBlob = midi.stopRecording();
+            recordMidiBtn.textContent = "⏺ Запись";
+            recordingStatus.textContent = "Статус: не записывается";
+            
+            if (midiBlob) {
+                // Создаем временную ссылку для скачивания
+                const url = URL.createObjectURL(midiBlob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'recorded-performance.mid';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                // Автоматически загружаем записанный файл для сравнения
+                const dataTransfer = new DataTransfer();
+                const file = new File([midiBlob], 'recorded-performance.mid', { type: 'audio/midi' });
+                dataTransfer.items.add(file);
+                midiFile2Input.files = dataTransfer.files;
+                
+                logDiv.textContent = "✅ Запись сохранена и готова к сравнению";
+            }
+        }
+    });
 });

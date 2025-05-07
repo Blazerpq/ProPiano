@@ -7,8 +7,12 @@
     <link rel="stylesheet" href="{% static 'music/css/my_composition.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/opensheetmusicdisplay@1.7.6/build/opensheetmusicdisplay.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tonejs/midi@2.0.7/build/Midi.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
 </head>
 <body>
+
+    <a href="{% url 'music' %}" class="button-back">Назад</a>
+
     <div id="container">
         <h2>{{ composition.title }}</h2>
         {% if composition.composer_name %}<p>Композитор: {{ composition.composer_name }}</p>{% endif %}
@@ -24,14 +28,22 @@
 
         <h3>Просмотр нот</h3>
         <div id="controls">
-            <button id="clearBtn">Очистить</button>
             <button id="zoomInBtn">🔍 Увеличить</button>
             <button id="zoomOutBtn">🔎 Уменьшить</button>
-            <button id="prevPageBtn">⬅️ Назад</button>
-            <button id="nextPageBtn">➡️ Вперёд</button>
         </div>
         <div id="log"></div>
         <div id="sheet"></div>
+
+        <h3>Подключение MIDI-клавиатуры</h3>
+        <button id="connect-midi-btn">Подключить MIDI</button>
+        <div id="midi-status">Статус: не подключено</div>
+        <div id="midi-log" class="midi-log"></div>
+
+        <h3>Запись игры</h3>
+        <div id="recording-controls">
+            <button id="recordMidiBtn">⏺ Запись</button>
+            <div id="recording-status">Статус: не записывается</div>
+        </div>
 
         <h3>Сравнение с эталонным MIDI</h3>
         <div id="midi-controls">
@@ -41,6 +53,7 @@
         </div>
     </div>
 
-    <script src="{% static 'music/js/composition_detail1.js' %}"></script>
+    <script type="module" src="{% static 'music/js/midi7.js' %}"></script>
+    <script type="module" src="{% static 'music/js/composition_detail7.js' %}"></script>
 </body>
 </html>
