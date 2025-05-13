@@ -33,13 +33,13 @@ body {
 
 .main-content a {
   text-decoration: none;
-  color: var(--color-blue);
+  color: var(--color-white);
   font-size: 1.8rem;
 }
 
 .main-content a:hover {
   color: var(--color-button);
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 /* Стили для карточек произведений */
@@ -78,7 +78,7 @@ body {
 .composition-card a {
   display: block;
   text-align: center;
-  background-color: #007bff;
+  background-color: var(--color-button);
   color: white;
   padding: 5px;
   border-radius: 5px;
@@ -87,7 +87,7 @@ body {
 }
 
 .composition-card a:hover {
-  background-color: #0056b3;
+  background-color: var(--color-button);
 }
 
 /* Дополнительные стили для контейнера всех карточек */
@@ -101,6 +101,11 @@ body {
 /* Заголовок */
 .title {
   text-align: center;
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.subtitle {
   font-size: 3rem;
   margin-bottom: 20px;
 }
@@ -158,15 +163,16 @@ body {
   cursor: pointer;
   text-decoration: none;
   transition: background 0.3s;
+  
 }
 
-.submit-button { background-color: var(--color-green); color: white; }
-.edit-button { background-color: var(--color-blue); color: white; }
-.delete-button { background-color: var(--color-red); color: white; }
 
-.submit-button:hover { background-color: var(--color-green-hover); }
+.edit-button { background-color: var(--color-button); color: white; }
+
+
+
 .edit-button:hover { background-color: var(--color-blue-hover); }
-.delete-button:hover { background-color: var(--color-red-hover); }
+
 
 .tab-menu {
   display: flex;

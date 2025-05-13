@@ -5,7 +5,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Личный кабинет - Владелец</title>
-  <!-- Подключение CSS -->
   <link rel="stylesheet" href="{% static 'main/css/reset.css' %}">
   <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
   <link rel="stylesheet" href="{% static 'music/css/music.css' %}">
@@ -13,7 +12,6 @@
 </head>
 <body>
 
-  <!-- Боковое меню -->
   <div class="sidebar">
     <ul>
       <li><a href="{% url 'music' %}">Музыка</a></li>
@@ -24,51 +22,96 @@
       <li>
         <form method="post" action="{% url 'logout' %}">
           {% csrf_token %}
-          <button type="submit" class="sidebar-link">
-            Выход
-          </button>
+          <button type="submit" class="sidebar-link">Выход</button>
         </form>
       </li>
     </ul>
   </div>
 
-  <!-- Основной контент -->
   <main class="main-content">
-    
-    <h1>Личный кабинет - Владелец </h1>
-
-    <h3>Ваши данные:</h3>
-    <ul>
-      <li>Имя: {{ user.first_name }}</li>
-      <li>Фамилия: {{ user.last_name }}</li>
-      <li>Email: {{ user.email }}</li>
-      <a href="{% url 'update_profile' %}">Изменить данные профиля</a>
-      <p></p>
-      <a href="{% url 'admin:index' %}">Админ-панель</a>
-      
-    <!-- Форма для добавления произведений -->
-    <h3>Добавить новое произведение</h3>
-    <form method="POST" enctype="multipart/form-data">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">Добавить</button>
-    </form>
-
-    <!-- Список произведений -->
-    <h3>Список произведений</h3>
-    <div class="compositions-container">
-      {% for composition in compositions %}
-        <div class="composition-card">
-          <img src="{{ composition.image }}" alt="{{ composition.title }}">
-          <h3>{{ composition.title }}</h3>
-          <p>Автор: {{ composition.composer_name }}</p>
-          <p>Жанр: {{ composition.genre }}</p>
-          <a href="{% url 'delete_composition' composition.composition_id %}">Удалить</a>
-        </div>
-      {% endfor %}
+    <h1 class="title">Личный кабинет - Владелец</h1>
+    <h3>Добро пожаловать, {{ user.username }}!</h3>
+    <div class="tab-menu">
+      <button class="tab-button active" onclick="openTab('profile')">Личные данные</button>
+      <button class="tab-button" onclick="openTab('compositions')">Произведения</button>
+      <button class="tab-button" onclick="openTab('admin')">Админ-панель</button>
     </div>
+
+    <!-- Вкладка: Личные данные -->
+    <section id="profile" class="tab-content active">
+      <h3>Ваши данные:</h3>
+      <ul>
+        <li>Имя: {{ user.first_name }}</li>
+        <li>Фамилия: {{ user.last_name }}</li>
+        <li>Email: {{ user.email }}</li>
+        <a href="{% url 'update_profile' %}" class="edit-button">Изменить данные профиля</a>
+      </ul>
+    </section>
+
+    <!-- Вкладка: Произведения -->
+    <section id="compositions" class="tab-content">
+      <h3>Добавить новое произведение</h3>
+      <form method="POST" enctype="multipart/form-data" class="composition-form">
+        {% csrf_token %}
+        <label for="title">Заголовок:</label>
+        {{ form.title }}
+
+        <label for="composer_name">Композитор:</label>
+        {{ form.composer_name }}
+
+        <label for="genre">Жанр:</label>
+        {{ form.genre }}
+
+        <label for="image">Обложка:</label>
+        {{ form.image }}
+
+        <label for="midi">Эталонный миди:</label>
+        {{ form.midi_file }}
+
+        <label for="notes">Ноты:</label>
+        {{ form.sheet_music }}
+
+        <button type="submit" class="submit-button">Добавить</button>
+      </form>
+
+      <h3>Список произведений</h3>
+      <div class="compositions-container">
+        {% for composition in compositions %}
+          <div class="composition-card">
+            {% if composition.image %}
+              <img src="{{ composition.image.url }}" class="composition-cover" alt="{{ composition.title }}">
+            {% endif %}
+            <h3 class="composition-title">{{ composition.title }}</h3>
+            <p>Автор: {{ composition.composer_name }}</p>
+            <p>Жанр: {{ composition.genre }}</p>
+            <a href="{% url 'delete_composition' composition.composition_id %}" class="delete-button">Удалить</a>
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <!-- Вкладка: Админ-панель -->
+    <section id="admin" class="tab-content">
+      <h3>Администрирование</h3>
+      <p>Для доступа к расширенным настройкам системы откройте административную панель:</p>
+      <a href="{% url 'admin:index' %}" class="edit-button">Перейти в админ-панель</a>
+    </section>
   </main>
 
   <script src="{% static 'main/js/scripts.js' %}"></script>
+  <script>
+    function openTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      document.querySelectorAll('.tab-button').forEach(btn => {
+        btn.classList.remove('active');
+      });
+
+      document.getElementById(tabId).classList.add('active');
+      document.querySelector(`[onclick="openTab('${tabId}')"]`).classList.add('active');
+    }
+  </script>
+
 </body>
 </html>

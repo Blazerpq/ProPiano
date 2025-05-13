@@ -2,11 +2,12 @@ from django import forms
 from music.models import Composition
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 from login.models import user_profile  # Импортируем вашу кастомную модель пользователя
+from music.models import Composition  # Импортируем вашу кастомную модель пользователя
 
 class CompositionForm(forms.ModelForm):
     class Meta:
         model = Composition
-        fields = ['title', 'genre', 'composer_name', 'image'] 
+        fields = ['title', 'genre', 'composer_name', 'image', 'midi_file', 'sheet_music'] 
 
 # Форма для обновления данных пользователя
 class ProfileUpdateForm(UserChangeForm):

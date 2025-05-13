@@ -13,7 +13,7 @@ body {
     align-items: center;
     height: 96vh;
     margin: -20px 0 50px;
-    background-image: url(https://bogatyr.club/uploads/posts/2023-03/1679223146_bogatyr-club-p-fortepiano-fon-foni-instagram-31.jpg);
+    background-image: url(https://img1.akspic.ru/crops/3/2/8/6/16823/16823-muzyka-sintezator-muzykalnyj_instrument-klyuch-klaviatura-1920x1080.jpg);
     background-size: cover;
 }
 
@@ -46,12 +46,12 @@ a {
 
 .container {
     border-radius: 10px;
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    background: #565656;
     position: absolute;
     overflow: hidden;
-    width: 1500px;
+    width: 700px;
     max-width: 100%;
-    min-height: 700px;
+    min-height: 400px;
     opacity: 0.8;
 }
 

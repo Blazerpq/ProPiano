@@ -1,63 +1,96 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Личный кабинет - Ученик</title>
-    <link rel="stylesheet" href="{% static 'main/css/reset.css' %}" />
-    <link rel="stylesheet" href="{% static 'main/css/style.css' %}" />
-    <link rel="stylesheet" href="{% static 'music/css/music.css' %}" />
-    <link rel="stylesheet" href="{% static 'profiles/css/profile.css' %}" />
-  </head>
-  <body>
-    <div class="sidebar">
-      <ul>
-        <li><a href="{% url 'music' %}">Музыка</a></li>
-        <li><a href="#">Поиск</a></li>
-        <li><a href="#">Уроки</a></li>
-        <li><a href="{% url 'profiles' %}">Личный кабинет</a></li>
-        <li><a href="{% url 'review' %}">Поддержка</a></li>
-        <li>
-          <form method="post" action="{% url 'logout' %}">
-            {% csrf_token %}
-            <button type="submit" class="sidebar-link">Выход</button>
-          </form>
-        </li>
-      </ul>
+<head>
+  <meta charset="UTF-8">
+  <title>Личный кабинет - Ученик</title>
+  <link rel="stylesheet" href="{% static 'main/css/reset.css' %}">
+  <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'music/css/music.css' %}">
+  <link rel="stylesheet" href="{% static 'profiles/css/profile.css' %}">
+</head>
+<body>
+
+  <div class="sidebar">
+    <ul>
+      <li><a href="{% url 'music' %}">Музыка</a></li>
+      <li><a href="#">Поиск</a></li>
+      <li><a href="#">Уроки</a></li>
+      <li><a href="{% url 'profiles' %}">Личный кабинет</a></li>
+      <li><a href="{% url 'review' %}">Поддержка</a></li>
+      <li>
+        <form method="post" action="{% url 'logout' %}">
+          {% csrf_token %}
+          <button type="submit" class="sidebar-link">Выход</button>
+        </form>
+      </li>
+    </ul>
+  </div>
+
+  <main class="main-content">
+    <h1 class="title">Личный кабинет - Ученик</h1>
+
+    <div class="tab-menu">
+      <button class="tab-button active" onclick="openTab('profile')">Личные данные</button>
+      <button class="tab-button" onclick="openTab('favorites')">Избранное</button>
+      <a href="{% url 'calendar' %}" class="tab-button">Календарь</a>
     </div>
-    <main class="main-content">
-      <h1>Личный кабинет - Ученик</h1>
-      <h1>Добро пожаловать, {{ user.username }}!</h1>
+
+    <!-- Вкладка: Личные данные -->
+    <section id="profile" class="tab-content active">
+      <h3>Добро пожаловать, {{ user.username }}!</h3>
+      <h3>Ваши данные:</h3>
       <ul>
-        <li>Ваши данные</li>
         <li>Имя: {{ user.first_name }}</li>
         <li>Фамилия: {{ user.last_name }}</li>
         <li>Email: {{ user.email }}</li>
-        <a href="{% url 'update_profile' %}">Изменить данные профиля</a>
-        <p></p>
-        <a href="{% url 'calendar' %}" class="calendar-button">Календарь</a>
       </ul>
-      <h1>Список избранных произведений</h1>
-      <!-- Проверка на наличие избранных композиций -->
-      {% if favorite_compositions %}
-      <div class="compositions-container">
-        {% for favorite in favorite_compositions %}
-        <div class="composition-card">
-          <img
-            src="{{ favorite.composition.image }}"
-            alt="{{ favorite.composition.title }}"
-          />
-          <h3>{{favorite.composition.title }}</h3>
-          <p>Жанр:{{ favorite.composition.genre }}</p>
+      <a href="{% url 'update_profile' %}" class="edit-button">Изменить данные профиля</a>
+    </section>
 
-          <!-- Кнопка для удаления композиции из избранного -->
-          <a href="{% url 'remove_from_favorites' favorite.id %}">Удалить</a>
+    <!-- Вкладка: Календарь -->
+    <section id="calendar" class="tab-content">
+      <p>Запланируйте своё обучение и следите за прогрессом в календаре.</p>
+      <a href="{% url 'calendar' %}" class="calendar-button">Перейти в календарь</a>
+    </section>
+
+    <!-- Вкладка: Избранное -->
+    <section id="favorites" class="tab-content">
+      <h3>Список избранных произведений</h3>
+      {% if favorite_compositions %}
+        <div class="compositions-container">
+          {% for favorite in favorite_compositions %}
+          <div class="composition-card">
+            {% if favorite.composition.image %}
+              <img src="{{ favorite.composition.image }}" alt="{{ favorite.composition.title }}">
+            {% endif %}
+            <h3 class="composition-title">{{ favorite.composition.title }}</h3>
+            <p>Жанр: {{ favorite.composition.genre }}</p>
+            <a href="{% url 'remove_from_favorites' favorite.id %}" class="delete-button">Удалить</a>
+          </div>
+          {% endfor %}
         </div>
-        {% endfor %}
-      </div>
       {% else %}
-      <p>У вас нет избранных произведений.</p>
+        <p>У вас нет избранных произведений.</p>
       {% endif %}
-    </main>
-  </body>
+    </section>
+
+  </main>
+
+  <script src="{% static 'main/js/scripts.js' %}"></script>
+  <script>
+    function openTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      document.querySelectorAll('.tab-button').forEach(btn => {
+        btn.classList.remove('active');
+      });
+
+      document.getElementById(tabId).classList.add('active');
+      document.querySelector(`[onclick="openTab('${tabId}')"]`).classList.add('active');
+    }
+  </script>
+
+</body>
 </html>

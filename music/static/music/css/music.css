@@ -87,7 +87,7 @@
   justify-content: space-between;
   overflow: hidden;
   /* Чтобы элементы не выходили за пределы */
-  background-color: #fff;
+  background-color: var(--color-button);
 }
 
 .composition-card img {
@@ -108,12 +108,13 @@
   font-size: 1.5rem;
   margin: 5px 0;
   text-align: center;
+  
 }
 
 .composition-card a {
   display: block;
   text-align: center;
-  background-color: #007bff;
+  background-color: var(--color-button);
   color: white;
   padding: 5px;
   border-radius: 5px;
@@ -122,7 +123,7 @@
 }
 
 .composition-card a:hover {
-  background-color: #0056b3;
+  background-color: rgba(0, 0, 78, 0.236);
 }
 
 /* Дополнительные стили для контейнера всех карточек */
@@ -152,7 +153,7 @@
 .genre-filter button {
   padding: 10px 20px;
   font-size: 1.7rem;
-  background-color: #007bff;
+  background-color: var(--color-button);
   color: white;
   border: none;
   border-radius: 5px;
@@ -160,7 +161,7 @@
 }
 
 .genre-filter button:hover {
-  background-color: #0056b3;
+  background-color: rgba(0, 0, 78, 0.236);
 }
 .genre-filter-wrapper {
   display: flex;
@@ -174,7 +175,7 @@
 .upload-link {
   font-size: 1.7rem;
   padding: 10px 16px;
-  background-color: #007bff;
+  background-color: var(--color-button);
   color: white;
   text-decoration: none;
   border-radius: 6px;
@@ -183,5 +184,5 @@
 }
 
 .upload-link:hover {
-  background-color: #0056b3;
+  background-color: rgba(0, 0, 78, 0.236);
 }
