@@ -57,22 +57,26 @@
     <!-- Вкладка: Избранное -->
     <section id="favorites" class="tab-content">
       <h3>Список избранных произведений</h3>
-      {% if favorite_compositions %}
-        <div class="compositions-container">
-          {% for favorite in favorite_compositions %}
-          <div class="composition-card">
-            {% if favorite.composition.image %}
-              <img src="{{ favorite.composition.image }}" alt="{{ favorite.composition.title }}">
-            {% endif %}
-            <h3 class="composition-title">{{ favorite.composition.title }}</h3>
-            <p>Жанр: {{ favorite.composition.genre }}</p>
-            <a href="{% url 'remove_from_favorites' favorite.id %}" class="delete-button">Удалить</a>
-          </div>
-          {% endfor %}
-        </div>
-      {% else %}
-        <p>У вас нет избранных произведений.</p>
-      {% endif %}
+{% if favorite_compositions %}
+  <div class="compositions-container">
+    {% for favorite in favorite_compositions %}
+      <div class="composition-card">
+        {% if favorite.composition.image %}
+          <img src="{{ favorite.composition.image.url }}"
+               class="composition-cover"
+               alt="{{ favorite.composition.title }}">
+        {% endif %}
+        <h3 class="composition-title">{{ favorite.composition.title }}</h3>
+        <p>Автор: {{ favorite.composition.composer_name }}</p>
+        <p>Жанр: {{ favorite.composition.genre }}</p>
+        <a href="{% url 'remove_from_favorites' favorite.id %}" class="delete-button">Удалить</a>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p>У вас нет избранных произведений.</p>
+{% endif %}
+
     </section>
 
   </main>
