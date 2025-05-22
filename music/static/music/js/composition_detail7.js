@@ -17,6 +17,28 @@ const osmd = new opensheetmusicdisplay.OpenSheetMusicDisplay(sheetContainer, {
     autoResize: true
 });
 
+function midiToNoteName(midi) {
+    const noteNames = ['До', 'До#', 'Ре', 'Ре#', 'Ми', 'Фа', 'Фа#', 'Соль', 'Соль#', 'Ля', 'Ля#', 'Си'];
+    const octave = Math.floor(midi / 12) - 1;
+    const name = noteNames[midi % 12];
+    return `${name} (${octave} октава)`;
+}
+
+function durationToNoteName(duration) {
+    if (duration >= 1.5) return "целая";
+    if (duration >= 0.75) return "половинная";
+    if (duration >= 0.4) return "четвертная";
+    if (duration >= 0.2) return "восьмая";
+    return "шестнадцатая";
+}
+
+function formatTime(seconds) {
+    const mins = Math.floor(seconds / 60);
+    const secs = (seconds % 60).toFixed(1).padStart(4, '0');
+    return `${mins}:${secs}`;
+}
+
+
 // Функции управления нотами
 function updateView() {
     osmd.zoom = zoom;
@@ -94,15 +116,21 @@ function compareMIDI(midi1, midi2) {
             Math.abs(note1.duration - note2.duration) < 0.2 &&
             Math.abs(note1.time - note2.time) < 0.3
         );
-        match ? matchCount++ : errors.push({
-            time: note1.time,
-            expected: `Нота ${note1.midi}, длит. ${note1.duration.toFixed(2)}`
-        });
+        if (match) {
+            matchCount++;
+        } else {
+            errors.push({
+                time: note1.time,
+                midi: note1.midi,
+                duration: note1.duration
+            });
+        }
     });
 
     const similarity = (matchCount / Math.max(notes1.length, notes2.length)) * 100;
-    return { similarity, errors: errors.slice(0, 3) };
+    return { similarity, errors: errors};
 }
+
 
 compareMidiBtn.addEventListener("click", async () => {
     summaryBox.style.display = "none";
@@ -136,6 +164,9 @@ compareMidiBtn.addEventListener("click", async () => {
 
         // Сравнение
         const { similarity, errors } = compareMIDI(midiRef, midiUser);
+        const allErrors = errors; // для полной кнопки позже
+        const previewErrors = errors.slice(0, 3);
+
         
         // Формирование отчета
         let evaluation = "";
@@ -155,18 +186,40 @@ compareMidiBtn.addEventListener("click", async () => {
             <strong>Совпадение:</strong> ${similarity.toFixed(1)}%<br>
             <strong>Оценка:</strong> ${evaluation}`;
 
-        if (errors.length > 0) {
-            html += `<p><strong>Основные ошибки:</strong></p><ul>`;
-            errors.forEach(e => {
-                html += `<li>На ${e.time.toFixed(1)} сек — ${e.expected}</li>`;
-            });
-            html += `</ul>`;
-        }
+            if (previewErrors.length > 0) {
+                html += `<p><strong>Первые ошибки:</strong></p><ul>`;
+                previewErrors.forEach(e => {
+                    html += `<li>⛔ На ${formatTime(e.time)} — ожидалась <strong>${midiToNoteName(e.midi)}</strong>, <em>${durationToNoteName(e.duration)}</em></li>`;
+                });
+                html += `</ul>`;
+            }
+            
         html += `</div>`;
 
         summaryBox.innerHTML = html;
         summaryBox.className = `${className} summary-box`;
         summaryBox.style.display = "block";
+
+        const showAllErrorsBtn = document.getElementById("showAllErrorsBtn");
+const allErrorsDiv = document.getElementById("all-errors");
+
+if (errors.length >= 3) {
+    showAllErrorsBtn.style.display = "inline-block";
+    showAllErrorsBtn.onclick = () => {
+        let fullHtml = "<h4>Полный список ошибок:</h4><ul>";
+        allErrors.forEach(e => {
+            fullHtml += `<li>⛔ На ${formatTime(e.time)} — ожидалась <strong>${midiToNoteName(e.midi)}</strong>, <em>${durationToNoteName(e.duration)}</em></li>`;
+        });
+        fullHtml += "</ul>";
+        allErrorsDiv.innerHTML = fullHtml;
+        allErrorsDiv.style.display = "block";
+        showAllErrorsBtn.style.display = "none"; // прячем кнопку после показа
+    };
+} else {
+    showAllErrorsBtn.style.display = "none";
+    allErrorsDiv.style.display = "none";
+}
+
 
     } catch (err) {
         summaryBox.innerHTML = `❌ Ошибка сравнения: ${err.message}`;
